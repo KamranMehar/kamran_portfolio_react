@@ -6,7 +6,7 @@ const SECTIONS = [
     { id: 'summary', icon: BsCardText, label: 'Summary' },
     { id: 'experience', icon: BsBriefcase, label: 'Experience' },
     { id: 'projects', icon: BsCollection, label: 'Projects' },
-    { id: 'skills_education', icon: BsMortarboard, label: 'Skills' }, // <-- FIXED HERE
+    { id: 'skills_education', icon: BsMortarboard, label: 'Skills' },
 ]
 
 export default function BottomNav({ active, onClick, className = '' }) {
