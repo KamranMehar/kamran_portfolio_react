@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import AboutMe from './sections/AboutMe'
+import AboutMe from './sections/about_me/AboutMe'
 import Summary from './sections/Summary'
 import Experience from './sections/Experience'
 import Projects from './sections/Projects'

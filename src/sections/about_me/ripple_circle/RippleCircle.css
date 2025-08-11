@@ -1,0 +1,46 @@
+.ripple_wrapper {
+    position: relative;
+    width: 50px;
+    /* desktop default */
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ring,
+.dot {
+    position: absolute;
+    border-radius: 50%;
+    background: #00eb1f;
+    /* same green as --secondary */
+}
+
+.ring {
+    width: 10px;
+    height: 10px;
+    will-change: transform, opacity;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+}
+
+/* mobile overrides */
+@media (max-width: 768px) {
+    .ripple_wrapper {
+        width: 1.5625rem;
+        /* 25px */
+        height: 1.5625rem;
+        /* 25px */
+    }
+
+    .ring,
+    .dot {
+        width: 0.4375rem;
+        /* 7px */
+        height: 0.4375rem;
+        /* 7px */
+    }
+}

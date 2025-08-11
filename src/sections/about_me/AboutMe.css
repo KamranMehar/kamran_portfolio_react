@@ -1,0 +1,132 @@
+/* ------------- Variables ------------- */
+:root {
+    --max-width-desktop: 60vw;
+    --max-width-mobile: 100%;
+    --spacing-desktop: 10px;
+    --spacing-mobile: 5px;
+    --primary: #ffffff;
+    --secondary: #F2B802;
+    --bg: transparent;
+}
+
+/* ------------- Section ------------- */
+.about_section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 6vh 5vw;
+    background: var(--bg);
+    color: var(--primary);
+    min-height: 100vh;
+}
+
+/* ------------- Ripple / Chip ------------- */
+.chip_row {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-bottom: 20vh;
+}
+
+.chip_text {
+    font-size: 1.125rem;
+    font-weight: 600;
+    font-family: 'Albert Sans', sans-serif;
+}
+
+
+
+/* ------------- Title / Name ------------- */
+.title {
+    margin: 0;
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--secondary);
+    letter-spacing: 0.05em;
+    line-height: 1;
+    font-family: 'Albert Sans', sans-serif;
+}
+
+.name {
+    margin: 0;
+    font-size: 3.25rem;
+    font-weight: 900;
+    line-height: 1;
+    /* letter-spacing: 0.01em; */
+    font-family: 'Albert Sans', sans-serif, ;
+}
+
+/* ------------- Social links wrapper ------------- */
+.social_wrapper {
+    margin-top: 4vh;
+    width: 100%;
+    max-width: var(--max-width-desktop);
+}
+
+.social_grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-desktop);
+}
+
+.social_link {
+    flex: 1 1 calc(50% - var(--spacing-desktop));
+    /* 2 columns on desktop */
+    min-width: 220px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 0;
+    text-decoration: none;
+    color: var(--primary);
+    font-size: 0.875rem;
+    transition: color 0.2s;
+}
+
+.social_link:hover {
+    color: var(--secondary);
+}
+
+.social_link .icon {
+    font-size: 20px;
+    color: var(--secondary);
+    display: flex;
+    align-items: center;
+}
+
+.label {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 300;
+    font-family: 'Albert Sans', sans-serif;
+    font-size: 1.125rem;
+}
+
+/* ------------- Responsive tweaks ------------- */
+@media (max-width: 768px) {
+    .chip_row {
+        margin-bottom: 10vh;
+    }
+
+    .social_wrapper {
+        max-width: var(--max-width-mobile);
+    }
+
+    .social_grid {
+        gap: var(--spacing-mobile);
+    }
+
+    .social_link {
+        flex: 1 1 100%;
+        /* single column on mobile */
+    }
+
+    .name {
+        font-size: 2.5rem;
+    }
+
+    .social_link .icon {
+        font-size: 15px;
+    }
+}
