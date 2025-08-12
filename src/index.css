@@ -133,14 +133,38 @@ button:focus-visible {
 }
 
 /* each section fills viewport height */
-.section {
-  min-height: 100vh;
+/* Example for all main sections */
+/* filepath: f:\frontend_projects\kamran_portfolio_react\src\index.css */
+.section,
+.about_section,
+.summary-section,
+.experience-section,
+.projects-section,
+.skills-education-section {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 2rem;
-  scroll-margin-top: 4rem;
+  align-items: flex-start;
+  /* Left align content */
+  justify-content: flex-start;
+  min-height: 100vh;
+  padding: 6vh 5vw;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+/* Responsive tweaks for mobile */
+@media (max-width: 768px) {
+
+  .section,
+  .about_section,
+  .summary-section,
+  .experience-section,
+  .projects-section,
+  .skills-education-section {
+    padding: 4vh 3vw;
+    min-height: 100vh;
+    width: 100%;
+  }
 }
 
 /* floating bar */

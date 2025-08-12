@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import AboutMe from './sections/about_me/AboutMe'
-import Summary from './sections/Summary'
+import Summary from './sections/summary/Summary'
 import Experience from './sections/Experience'
 import Projects from './sections/Projects'
 import SkillsEducation from './sections/SkillsEducation'
@@ -26,21 +26,26 @@ export default function App() {
     if (!refs.current[id]) refs.current[id] = React.createRef()
   })
 
-  // scroll spy
+  // Restore previous scroll spy logic
   useEffect(() => {
     const observer = new IntersectionObserver(
       entries => {
-        entries.forEach(e => {
-          if (e.isIntersecting) setActive(e.target.id)
-        })
+        // Find the entry with the largest intersection ratio
+        const visible = entries
+          .filter(e => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible) setActive(visible.target.id);
       },
-      { threshold: 0.3 }
-    )
+      {
+        threshold: 0.2, // 30% of section visible
+        rootMargin: '0px 0px -20% 0px' // bottom margin triggers earlier
+      }
+    );
     SECTIONS.forEach(id => {
-      const el = refs.current[id]?.current
-      if (el) observer.observe(el)
-    })
-    return () => observer.disconnect()
+      const el = refs.current[id]?.current;
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
   }, [])
 
   useEffect(() => {
@@ -94,10 +99,18 @@ export default function App() {
         <section id="about_me" ref={refs.current.about_me}>
           <AboutMe />
         </section>
-        <Summary ref={refs.current.summary} />
-        <Experience ref={refs.current.experience} />
-        <Projects ref={refs.current.projects} />
-        <SkillsEducation ref={refs.current.skills_education} />
+        <section id="summary" ref={refs.current.summary}>
+          <Summary />
+        </section>
+        <section id="experience" ref={refs.current.experience}>
+          <Experience />
+        </section>
+        <section id="projects" ref={refs.current.projects}>
+          <Projects />
+        </section>
+        <section id="skills_education" ref={refs.current.skills_education}>
+          <SkillsEducation />
+        </section>
       </main>
 
       <BottomNav

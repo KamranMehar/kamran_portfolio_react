@@ -1,0 +1,143 @@
+/* ------------- Variables (mirror AboutMe.css) ------------- */
+:root {
+    --max-width-desktop: 60vw;
+    --max-width-mobile: 100%;
+    --spacing-desktop: 10px;
+    --spacing-mobile: 5px;
+
+    --primary: #ffffff;
+    --secondary: #F2B802;
+    --bg: transparent;
+}
+
+/* ------------- Section wrapper ------------- */
+.summary-section {
+    display: flex;
+    margin-top: 20px;
+    flex-direction: column;
+    align-items: flex-start;
+    /* left aligned */
+    padding: 6vh 5vw;
+    /* same vertical rhythm as AboutMe */
+    background: var(--bg);
+    color: var(--primary);
+    min-height: auto;
+    /* let content decide */
+}
+
+/* ------------- Title ------------- */
+.summary-title {
+    margin: 0 0 6vh 0;
+    /* same gap as .chip_row → .title in AboutMe */
+    font-size: 2.75rem;
+    font-weight: 700;
+    color: var(--secondary);
+    font-family: 'Albert Sans', sans-serif;
+    line-height: 1;
+    text-align: left;
+}
+
+/* ------------- Short summary ------------- */
+.summary-text {
+    max-width: var(--max-width-desktop);
+    margin-bottom: 6vh;
+}
+
+.summary-paragraph {
+    font-size: clamp(1rem, 2.5vw, 1.125rem);
+    line-height: 1.6;
+    color: var(--primary);
+    margin: 0;
+    text-align: left;
+}
+
+/* ------------- Bio with accent bar ------------- */
+.bio-wrapper {
+    display: flex;
+    gap: calc(var(--spacing-desktop) + 8px);
+    /* 18px on desktop */
+    max-width: var(--max-width-desktop);
+}
+
+.accent-bar {
+    width: 3px;
+    background: var(--secondary);
+    border-radius: 1px;
+    flex-shrink: 0;
+}
+
+.bio-text {
+    flex: 1;
+}
+
+.bio-paragraph {
+    font-size: clamp(1.125rem, 2.8vw, 1.375rem);
+    font-weight: 600;
+    line-height: 1.5;
+    color: var(--primary);
+    margin: 0;
+    text-align: left;
+    width: 30vw;
+    /* 30% of viewport width on desktop */
+    max-width: 30vw;
+    /* Prevents overflow */
+}
+
+@media (max-width: 768px) {
+    .summary-section {
+        padding: 4vh 5vw;
+    }
+
+    .summary-title {
+        font-size: 2.25rem;
+        margin-bottom: 4vh;
+    }
+
+    .summary-text,
+    .bio-wrapper {
+        max-width: var(--max-width-mobile);
+    }
+
+    .bio-wrapper {
+        gap: calc(var(--spacing-mobile) + 8px);
+        /* 13px on mobile */
+    }
+
+    .bio-paragraph {
+        width: 100%;
+        max-width: 100%;
+    }
+}
+
+/* ------------- Skeletons (re-use AboutMe theme) ------------- */
+.skeleton {
+    position: relative;
+    background: linear-gradient(90deg,
+            rgba(255, 255, 255, .08) 25%,
+            rgba(255, 255, 255, .18) 50%,
+            rgba(255, 255, 255, .08) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.6s infinite linear;
+    border-radius: 4px;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+/* Skeleton blocks sized to match real text */
+.skeleton-summary {
+    height: 1.125rem;
+    margin-bottom: 0.5rem;
+}
+
+.skeleton-bio {
+    height: 1.375rem;
+    margin-bottom: 0.4rem;
+}
