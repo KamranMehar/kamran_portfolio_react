@@ -1,0 +1,209 @@
+/* SkillsEducation.css */
+:root {
+    --color-bg: transparent;
+    --color-primary: #fff;
+    --color-secondary: #f2b802;
+}
+
+.skills-education {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 6vh 5vw;
+    color: var(--color-primary);
+    padding-bottom: 150px;
+}
+
+.skills-education-wrapper {
+    max-width: 70%;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .skills-education-wrapper {
+        max-width: 100%;
+    }
+}
+
+
+
+.section-title {
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    font-weight: 700;
+    color: var(--color-secondary);
+    margin-bottom: 20px;
+}
+
+/* ---------- Section block ---------- */
+.section-block {
+    width: 100%;
+    color: var(--color-primary);
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.section-header h2 {
+    margin-left: 15px;
+    font-size: 1.5em;
+    font-weight: 700;
+    color: var(--color-primary);
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-secondary);
+    flex-shrink: 0;
+}
+
+/* ---------- Programming Languages ---------- */
+.p-lang-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+}
+
+.skill-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.skill-row img {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+}
+
+/* ---------- Frameworks / Tools grid ---------- */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+}
+
+.grid-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 8px;
+}
+
+.grid-item img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+}
+
+/* ---------- Skills & Languages Progress ---------- */
+.skills-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.skill-progress {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    justify-content: flex-start;
+}
+
+.skill-progress span {
+    width: 150px;
+    flex-shrink: 0;
+    text-align: left;
+    font-weight: 500;
+}
+
+.progress-bar {
+    flex: 1;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.progress-bar div {
+    height: 100%;
+    background: var(--color-secondary);
+    transition: width 1.5s ease-out;
+}
+
+@media (max-width: 600px) {
+    .progress-bar {
+        width: 100%;
+        height: 8px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 999px;
+        overflow: hidden;
+    }
+
+    .progress-bar div {
+        height: 100%;
+        background: var(--color-secondary);
+    }
+}
+
+
+
+
+/* ---------- Timeline (Education / Certificates) ---------- */
+.timeline {
+    padding-left: 20px;
+    position: relative;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: var(--color-primary);
+}
+
+.timeline-item {
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.timeline-item .line {
+    position: absolute;
+    left: -20px;
+    top: 5px;
+    width: 1px;
+    height: 100%;
+    background: var(--color-primary);
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+}
+
+.title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.date {
+    font-size: 0.8em;
+    color: var(--color-secondary);
+}
+
+/* ---------- Skeleton overrides ---------- */
+.skeleton {
+    color: transparent !important;
+}

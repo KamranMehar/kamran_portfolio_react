@@ -3,7 +3,7 @@ import AboutMe from './sections/about_me/AboutMe'
 import Summary from './sections/summary/Summary'
 import Experience from './sections/experience/Experience'
 import Projects from './sections/projects/Projects'
-import SkillsEducation from './sections/SkillsEducation'
+import SkillsEducation from './sections//skills/SkillsEducation'
 import BottomNav from './components/BottomNav'
 import { BACKGROUND_IMAGES } from './constants/images'
 
