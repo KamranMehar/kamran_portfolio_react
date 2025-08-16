@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import '../summary/Summary.css';
+import '../summary/summary.css';
 import { db } from '../../firebase';
 import { doc, getDoc } from 'firebase/firestore';
 
