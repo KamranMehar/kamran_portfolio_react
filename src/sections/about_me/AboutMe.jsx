@@ -105,15 +105,17 @@ const AboutMe = React.forwardRef((_, ref) => {
                 </>
             )}
 
-            {/* Sticky download CV button */}
-            <a
-                className="sticky-download-cv"
-                href={resumeUrl}
-                download={resumeFileName}
-            >
-                <span className="cv-text">Download CV</span>
-                <span className="cv-icon"><FaDownload /></span>
-            </a>
+            {/* Sticky download CV button – outside the flex parent */}
+            <div className="cv-button-wrapper">
+                <a
+                    className="sticky-download-cv"
+                    href={resumeUrl}
+                    download={resumeFileName}
+                >
+                    <span className="cv-text">Download CV</span>
+                    <span className="cv-icon"><FaDownload /></span>
+                </a>
+            </div>
         </section>
     );
 });

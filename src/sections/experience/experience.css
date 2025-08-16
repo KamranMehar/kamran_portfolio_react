@@ -132,15 +132,15 @@
 .sk-position,
 .sk-date,
 .sk-company,
-.sk-desc {
-    display: block;
-    height: 1.25rem;
-    margin-bottom: 6px;
-    border-radius: 6px;
+.sk-desc,
+.logo.sk-logo
+
+/* the circle skeleton */
+    {
     background: linear-gradient(90deg,
-            rgba(255, 255, 255, 0.12) 25%,
-            rgba(153, 153, 153, 0.3) 50%,
-            rgba(242, 184, 2, 0.12) 75%);
+            rgba(255, 255, 255, .08) 25%,
+            rgba(255, 255, 255, .18) 50%,
+            rgba(255, 255, 255, .08) 75%);
     background-size: 200% 100%;
     animation: shimmer 1.6s infinite linear;
 }
