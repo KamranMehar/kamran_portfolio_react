@@ -33,7 +33,7 @@ const RippleCircle = () => {
             {/* animated ring */}
             <div className="ring" ref={ringRef} />
             {/* solid dot */}
-            <div className="dot" />
+            <div className="dot-ripple" />
         </div>
     );
 };

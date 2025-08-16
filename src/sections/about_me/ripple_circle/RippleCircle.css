@@ -9,7 +9,7 @@
 }
 
 .ring,
-.dot {
+.dot-ripple {
     position: absolute;
     border-radius: 50%;
     background: #00eb1f;
@@ -17,27 +17,27 @@
 }
 
 .ring {
-    width: 10px;
-    height: 10px;
+    width: 8px;
+    height: 8px;
     will-change: transform, opacity;
 }
 
-.dot {
-    width: 10px;
-    height: 10px;
+.dot-ripple {
+    width: 8px;
+    height: 8px;
 }
 
 /* mobile overrides */
 @media (max-width: 768px) {
     .ripple_wrapper {
-        width: 1.5625rem;
+        width: 1.25rem;
         /* 25px */
-        height: 1.5625rem;
+        height: 1.25rem;
         /* 25px */
     }
 
     .ring,
-    .dot {
+    .dot-ripple {
         width: 0.4375rem;
         /* 7px */
         height: 0.4375rem;
