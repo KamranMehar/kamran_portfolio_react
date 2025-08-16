@@ -209,3 +209,79 @@
         height: 2rem;
     }
 }
+
+.sticky-download-cv {
+    position: fixed;
+    /* keep this */
+    top: 6%;
+    right: 2%;
+    background-color: var(--secondary);
+    color: #000;
+    font-weight: 600;
+    padding: 0.7rem 1.2rem;
+    border-radius: 50px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    cursor: pointer;
+    z-index: 1000;
+    width: auto;
+    height: auto;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+
+.sticky-download-cv:hover {
+    background-color: #fff;
+    color: #000;
+}
+
+.cv-text,
+.cv-icon {
+    transition: transform 0.4s ease, opacity 0.3s ease;
+    white-space: nowrap;
+}
+
+.cv-text {
+    opacity: 1;
+    transform: translateY(0);
+    font-size: 0.915rem;
+}
+
+.cv-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    opacity: 0;
+}
+
+.sticky-download-cv:hover .cv-text {
+    transform: translateY(-100%);
+    opacity: 0;
+}
+
+.sticky-download-cv:hover .cv-icon {
+    transform: translate(-50%, -50%);
+    opacity: 1;
+}
+
+.cv-icon svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    color: inherit;
+}
+
+/* Responsive for mobile */
+@media (max-width: 768px) {
+    .sticky-download-cv {
+        right: 1rem;
+        top: auto;
+        bottom: 2rem;
+        width: 130px;
+        height: 40px;
+        padding: 0.6rem 1.2rem;
+    }
+}
