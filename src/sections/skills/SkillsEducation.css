@@ -38,6 +38,7 @@
 .section-block {
     width: 100%;
     color: var(--color-primary);
+    padding-bottom: 50px;
 }
 
 .section-header {
@@ -76,8 +77,8 @@
 }
 
 .skill-row img {
-    width: 30px;
-    height: 30px;
+    width: 2.1875rem;
+    height: 2.1875rem;
     object-fit: contain;
 }
 
@@ -206,4 +207,17 @@
 /* ---------- Skeleton overrides ---------- */
 .skeleton {
     color: transparent !important;
+}
+
+.text-icon {
+    width: 50px;
+    height: 50px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-weight: 700;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    opacity: 0.9;
 }

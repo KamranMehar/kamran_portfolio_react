@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import './projects.css';
+import '../projects/projects.css';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import { db } from '../../firebase';

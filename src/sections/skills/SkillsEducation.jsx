@@ -2,10 +2,15 @@
 import React, { forwardRef, useEffect, useState, useRef } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
-import './SkillsEducation.css';
+import '../skills/SkillsEducation.css';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
 
+/* ---- Supabase public bucket base ---- */
+const SUPABASE_ICON_URL =
+    'https://waezyuycuuwepssofegp.supabase.co/storage/v1/object/public/skills-icons';
+
+/* ---- Firestore fetch ---- */
 const fetchData = async () => {
     const snap = await getDoc(doc(db, 'portfolio_content', 'skills_education'));
     if (!snap.exists()) throw new Error('No data');
@@ -22,16 +27,16 @@ const fetchData = async () => {
     };
 };
 
-/* ---------- animated progress ---------- */
+/* ---- animated progress ---- */
 const AnimatedProgress = ({ value }) => {
     const [width, setWidth] = useState(0);
     const ref = useRef();
     useEffect(() => {
         const io = new IntersectionObserver(
             ([e]) => e.isIntersecting && setWidth(value),
-            { threshold: 0.5 }
+            { threshold: 0.4 }
         );
-        io.observe(ref.current);
+        if (ref.current) io.observe(ref.current);
         return () => io.disconnect();
     }, [value]);
     return (
@@ -41,6 +46,32 @@ const AnimatedProgress = ({ value }) => {
     );
 };
 
+
+const IconImage = ({ url, id, alt, className }) => {
+    // Start with provided URL if any; otherwise go straight to Supabase guess
+    const initial = url && url.trim().length > 0 ? url : `${SUPABASE_ICON_URL}/${id}.png`;
+    const [src, setSrc] = useState(initial);
+    const [triedSupabase, setTriedSupabase] = useState(
+        initial.startsWith(SUPABASE_ICON_URL)
+    );
+    const [failed, setFailed] = useState(false);
+
+    const handleError = () => {
+        if (!triedSupabase) {
+            setTriedSupabase(true);
+            setSrc(`${SUPABASE_ICON_URL}/${id}`);
+        } else {
+            setFailed(true);
+        }
+    };
+
+    if (failed) {
+        return <span className={`text-icon ${className || ''}`}>{'</>'}</span>;
+    }
+    return <img src={src} alt={alt} onError={handleError} className={className} />;
+};
+
+/* ---- main component ---- */
 const SkillsEducation = forwardRef((_, ref) => {
     const [state, setState] = useState({
         loading: true,
@@ -72,9 +103,11 @@ const SkillsEducation = forwardRef((_, ref) => {
                         </div>
                         <div className="p-lang-grid">
                             {loading
-                                ? Array(4).fill(0).map((_, i) => <SkeletonCard key={i} />)
+                                ? Array(4)
+                                    .fill(0)
+                                    .map((_, i) => <SkeletonCard key={i} />)
                                 : data.programingLanguage.map((p) => (
-                                    <SkillRow icon={p.iconUrl} name={p.name} key={p.id} />
+                                    <SkillRow icon={p.iconUrl} id={p.id} name={p.name} key={p.id} />
                                 ))}
                         </div>
                     </div>
@@ -89,9 +122,11 @@ const SkillsEducation = forwardRef((_, ref) => {
                         </div>
                         <Grid>
                             {loading
-                                ? Array(5).fill(0).map((_, i) => <SkeletonCard key={i} />)
+                                ? Array(5)
+                                    .fill(0)
+                                    .map((_, i) => <SkeletonCard key={i} />)
                                 : data.frameworkLibraries.map((f) => (
-                                    <GridItem icon={f.iconUrl} name={f.name} key={f.id} />
+                                    <GridItem icon={f.iconUrl} id={f.id} name={f.name} key={f.id} />
                                 ))}
                         </Grid>
                     </div>
@@ -106,9 +141,11 @@ const SkillsEducation = forwardRef((_, ref) => {
                         </div>
                         <Grid>
                             {loading
-                                ? Array(5).fill(0).map((_, i) => <SkeletonCard key={i} />)
+                                ? Array(5)
+                                    .fill(0)
+                                    .map((_, i) => <SkeletonCard key={i} />)
                                 : data.toolsTechnologies.map((t) => (
-                                    <GridItem icon={t.iconUrl} name={t.name} key={t.id} />
+                                    <GridItem icon={t.iconUrl} id={t.id} name={t.name} key={t.id} />
                                 ))}
                         </Grid>
                     </div>
@@ -123,14 +160,11 @@ const SkillsEducation = forwardRef((_, ref) => {
                         </div>
                         <div className="skills-list">
                             {loading
-                                ? Array(3).fill(0).map((_, i) => <SkeletonSkill key={i} />)
+                                ? Array(3)
+                                    .fill(0)
+                                    .map((_, i) => <SkeletonSkill key={i} />)
                                 : data.skills.map((s) => (
-                                    <SkillProgress
-                                        key={s.id}
-                                        name={s.name}
-                                        level={s.level}
-                                        color="var(--color-secondary)"
-                                    />
+                                    <SkillProgress key={s.id} name={s.name} level={s.level} />
                                 ))}
                         </div>
                     </div>
@@ -145,13 +179,16 @@ const SkillsEducation = forwardRef((_, ref) => {
                         </div>
                         <Timeline>
                             {loading
-                                ? Array(2).fill(0).map((_, i) => <SkeletonTimeline key={i} />)
+                                ? Array(2)
+                                    .fill(0)
+                                    .map((_, i) => <SkeletonTimeline key={i} />)
                                 : data.educations.map((e) => (
                                     <TimelineItem
                                         key={e.id}
                                         title={e.fieldOfStudy}
                                         sub={e.school}
-                                        date={`${fmt(e.startDate)} - ${e.endDate ? fmt(e.endDate) : 'Present'}`}
+                                        date={`${fmt(e.startDate)} - ${e.endDate ? fmt(e.endDate) : 'Present'
+                                            }`}
                                     />
                                 ))}
                         </Timeline>
@@ -167,7 +204,9 @@ const SkillsEducation = forwardRef((_, ref) => {
                         </div>
                         <Timeline>
                             {loading
-                                ? Array(2).fill(0).map((_, i) => <SkeletonTimeline key={i} />)
+                                ? Array(2)
+                                    .fill(0)
+                                    .map((_, i) => <SkeletonTimeline key={i} />)
                                 : data.certificates.map((c) => (
                                     <TimelineItem
                                         key={c.id}
@@ -189,14 +228,11 @@ const SkillsEducation = forwardRef((_, ref) => {
                         </div>
                         <div className="skills-list">
                             {loading
-                                ? Array(3).fill(0).map((_, i) => <SkeletonSkill key={i} />)
+                                ? Array(3)
+                                    .fill(0)
+                                    .map((_, i) => <SkeletonSkill key={i} />)
                                 : data.languages.map((l) => (
-                                    <SkillProgress
-                                        key={l.id}
-                                        name={l.name}
-                                        level={l.level}
-                                        color="var(--color-white)"
-                                    />
+                                    <SkillProgress key={l.id} name={l.name} level={l.level} />
                                 ))}
                         </div>
                     </div>
@@ -206,18 +242,19 @@ const SkillsEducation = forwardRef((_, ref) => {
     );
 });
 
-/* ---------- reusable UI parts ---------- */
+/* ---- small UI parts ---- */
 const Grid = ({ children }) => <div className="grid">{children}</div>;
-const GridItem = ({ icon, name }) => (
+
+const GridItem = ({ icon, id, name }) => (
     <div className="grid-item">
-        <img src={icon} alt={name} onError={(e) => (e.target.style.display = 'none')} />
+        <IconImage url={icon} id={id} alt={name} />
         <span>{name}</span>
     </div>
 );
 
-const SkillRow = ({ icon, name }) => (
+const SkillRow = ({ icon, id, name }) => (
     <div className="skill-row">
-        <img src={icon} alt="" />
+        <IconImage url={icon} id={id} alt={name} className="skill-icon" />
         <span>{name}</span>
     </div>
 );
@@ -243,7 +280,7 @@ const TimelineItem = ({ title, sub, date }) => (
     </div>
 );
 
-/* ---------- skeleton shapes ---------- */
+/* ---- skeletons ---- */
 const SkeletonCard = () => (
     <div className="grid-item skeleton">
         <Skeleton circle height={50} width={50} />
@@ -263,7 +300,8 @@ const SkeletonTimeline = () => (
     </div>
 );
 
-/* ---------- helper ---------- */
-const fmt = (str) => new Date(str).toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+/* ---- helper ---- */
+const fmt = (str) =>
+    new Date(str).toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
 
 export default SkillsEducation;
