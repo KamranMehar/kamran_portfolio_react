@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './AboutMe.css';
+import '../about_me/AboutMe.css';
 import RippleCircle from './ripple_circle/RippleCircle.jsx';
 import { db } from '../../firebase';
 import { doc, getDoc } from 'firebase/firestore';

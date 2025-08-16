@@ -2,7 +2,7 @@
 import React, { forwardRef, useEffect, useState, useRef } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
-import './SkillsEducation.css';
+import '../skills/SkillsEducation.css';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
 
