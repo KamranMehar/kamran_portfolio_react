@@ -3,7 +3,6 @@ import '../about_me/AboutMe.css';
 import RippleCircle from './ripple_circle/RippleCircle.jsx';
 import { db } from '../../firebase';
 import { doc, getDoc } from 'firebase/firestore';
-import { supabase } from '../../supabase';
 import { MdEmail, MdCall, MdLocationOn } from 'react-icons/md';
 import { FaLinkedin, FaWhatsapp, FaDownload } from 'react-icons/fa';
 
@@ -32,32 +31,16 @@ const AboutMe = React.forwardRef((_, ref) => {
         }
         fetchData();
     }, []);
-
     useEffect(() => {
-        async function getResume() {
-            const filePath = 'Kamran_Shahzad_Flutter_Developer_Resume.pdf'; // <-- path in Supabase
-            const { data, error } = await supabase
-                .storage
-                .from('resume')
-                .download(filePath);
-
-            if (error) {
-                console.error(error);
-                return;
-            }
-
-            if (data) {
-                const blob = new Blob([data], { type: 'application/pdf' });
-                const url = URL.createObjectURL(blob);
-                setResumeUrl(url);
-
-                // Extract filename from storage path
-                const fileName = filePath.split('/').pop();
-                setResumeFileName(fileName);
-            }
-        }
-
-        getResume();
+        // read the field you created: "resume_url"
+        getDoc(doc(db, 'portfolio_content', 'about_me'))
+            .then((snap) => {
+                const url = snap.data()?.resume_url;
+                if (url) {
+                    setResumeUrl(url);
+                    setResumeFileName('Kamran_Shahzad_Flutter_Developer_Resume.pdf');
+                }
+            });
     }, []);
 
     return (

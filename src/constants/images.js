@@ -1,5 +1,5 @@
 export const BACKGROUND_IMAGES = {
-    DESKTOP: 'https://waezyuycuuwepssofegp.supabase.co/storage/v1/object/sign/core-assets/desktop.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV82NDBjMmJiZS1lYmQ5LTRlNmQtOTcyMi05YTFlNDU5OWFkMGIiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJjb3JlLWFzc2V0cy9kZXNrdG9wLnBuZyIsImlhdCI6MTc1NDU0MTU3NSwiZXhwIjozMzMxMzQxNTc1fQ.aDf0OCzbkSsoX3BYnpK9lgOxb86csq7ythikRZC7TvQ',
-    TABLET: 'https://waezyuycuuwepssofegp.supabase.co/storage/v1/object/sign/core-assets/tablet.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV82NDBjMmJiZS1lYmQ5LTRlNmQtOTcyMi05YTFlNDU5OWFkMGIiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJjb3JlLWFzc2V0cy90YWJsZXQucG5nIiwiaWF0IjoxNzU0NTQxODU3LCJleHAiOjMzMzEzNDE4NTd9.UCWCntXTlzQ8UY1RAGfq1JVNXtkI0NB2jugb0HMSXB0',
-    MOBILE: 'https://waezyuycuuwepssofegp.supabase.co/storage/v1/object/sign/core-assets/mobile.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV82NDBjMmJiZS1lYmQ5LTRlNmQtOTcyMi05YTFlNDU5OWFkMGIiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJjb3JlLWFzc2V0cy9tb2JpbGUucG5nIiwiaWF0IjoxNzU0NTQxODMwLCJleHAiOjQ5MDgxNDE4MzB9.0ej5LUsql-VCP5BHm1HrHhR0KJULc7jzukHhKvAwbJE'
+    DESKTOP: '/images/desktop.png',
+    TABLET: '/images/tablet.png',
+    MOBILE: '/images/mobile.png'
 };
