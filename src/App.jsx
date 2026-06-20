@@ -3,7 +3,7 @@ import AboutMe from './sections/about_me/AboutMe'
 import Summary from './sections/summary/Summary'
 import Experience from './sections/experience/Experience'
 import Projects from './sections/projects/Projects'
-import SkillsEducation from './sections//skills/SkillsEducation'
+import SkillsEducation from './sections/skills/SkillsEducation'
 import BottomNav from './components/BottomNav'
 import { BACKGROUND_IMAGES } from './constants/images'
 
@@ -21,24 +21,21 @@ export default function App() {
   const [navVisible, setNavVisible] = useState(false);
   const refs = useRef({})
 
-  // build refs on first render
   SECTIONS.forEach(id => {
     if (!refs.current[id]) refs.current[id] = React.createRef()
   })
 
-  // Restore previous scroll spy logic
   useEffect(() => {
     const observer = new IntersectionObserver(
       entries => {
-        // Find the entry with the largest intersection ratio
         const visible = entries
           .filter(e => e.isIntersecting)
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
         if (visible) setActive(visible.target.id);
       },
       {
-        threshold: 0.2, // 30% of section visible
-        rootMargin: '0px 0px -20% 0px' // bottom margin triggers earlier
+        threshold: 0.2,
+        rootMargin: '0px 0px -20% 0px'
       }
     );
     SECTIONS.forEach(id => {
@@ -67,32 +64,12 @@ export default function App() {
         className="background-image"
         style={{
           backgroundImage: `url(${bgImage})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          position: 'fixed',
-          inset: 0,
-          width: '100%',
-          height: '100vh',
-          zIndex: -2
         }}
       />
 
-      {/* Blur overlay layer - sits above background but below content */}
+      {/* Blur overlay layer */}
       <div
         className={`blur-overlay${active !== 'about_me' ? ' show' : ''}`}
-        style={{
-          position: 'fixed',
-          inset: 0,
-          width: '100%',
-          height: '100vh',
-          zIndex: -1,
-          backdropFilter: 'blur(16px)',
-          WebkitBackdropFilter: 'blur(16px)',
-          opacity: active !== 'about_me' ? 1 : 0,
-          transition: 'opacity 400ms ease-in-out',
-          pointerEvents: 'none'
-        }}
       />
 
       <main>

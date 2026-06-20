@@ -1,35 +1,47 @@
-/* ------------- Variables (mirror AboutMe.css) ------------- */
+/* ------------- Variables ------------- */
 :root {
     --max-width-desktop: 60vw;
     --max-width-mobile: 100%;
     --spacing-desktop: 10px;
     --spacing-mobile: 5px;
-
     --primary: #ffffff;
     --secondary: #F2B802;
+    --glass-bg: rgba(255, 255, 255, 0.03);
+    --glass-border: rgba(255, 255, 255, 0.08);
     --bg: transparent;
 }
 
 /* ------------- Section wrapper ------------- */
 .summary-section {
     display: flex;
-    margin-top: 20px;
     flex-direction: column;
     align-items: flex-start;
-    /* left aligned */
     padding: 6vh 5vw;
-    /* same vertical rhythm as AboutMe */
     background: var(--bg);
     color: var(--primary);
     min-height: auto;
-    /* let content decide */
+}
+
+/* ------------- Section Header ------------- */
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 4vh;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUp 0.6s ease forwards;
+}
+
+.header-icon {
+    color: var(--secondary);
+    filter: drop-shadow(0 0 8px rgba(242, 184, 2, 0.4));
 }
 
 /* ------------- Title ------------- */
 .summary-title {
-    margin: 0 0 6vh 0;
-    /* same gap as .chip_row → .title in AboutMe */
-    font-size: 2.75rem;
+    margin: 0;
+    font-size: clamp(1.8rem, 4vw, 2.75rem);
     font-weight: 700;
     color: var(--secondary);
     font-family: 'Albert Sans', sans-serif;
@@ -40,76 +52,282 @@
 /* ------------- Short summary ------------- */
 .summary-text {
     max-width: var(--max-width-desktop);
-    margin-bottom: 6vh;
+    margin-bottom: 4vh;
+    opacity: 0;
+    animation: fadeUp 0.6s ease 0.2s forwards;
 }
 
 .summary-paragraph {
-    font-size: clamp(1rem, 2.5vw, 1.125rem);
-    line-height: 1.6;
-    color: var(--primary);
+    font-size: clamp(1rem, 2vw, 1.15rem);
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.85);
     margin: 0;
     text-align: left;
+}
+
+/* Word-by-word animation */
+.summary-paragraph .word-normal,
+.summary-paragraph .word-highlight {
+    display: inline;
+    opacity: 0;
+    animation: wordFadeIn 0.4s ease forwards;
+}
+
+@keyframes wordFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(4px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Highlighted keywords */
+.word-highlight {
+    color: var(--secondary);
+    font-weight: 600;
+    position: relative;
+    padding: 0 2px;
+    margin: 0 1px;
+    border-radius: 3px;
+    background: linear-gradient(180deg, rgba(242, 184, 2, 0.1) 0%, transparent 100%);
+}
+
+.word-highlight::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 2px;
+    right: 2px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--secondary), transparent);
+    opacity: 0.4;
+    border-radius: 1px;
+}
+
+/* ------------- Highlights Grid ------------- */
+.highlights-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    max-width: var(--max-width-desktop);
+    width: 100%;
+    margin-bottom: 5vh;
+}
+
+.highlight-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    border-radius: 14px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUp 0.5s ease forwards;
+}
+
+.highlight-card:hover {
+    border-color: rgba(242, 184, 2, 0.25);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.highlight-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, rgba(242, 184, 2, 0.15), rgba(242, 184, 2, 0.05));
+    border: 1px solid rgba(242, 184, 2, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--secondary);
+    flex-shrink: 0;
+}
+
+.highlight-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.highlight-label {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.highlight-sub {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: 500;
 }
 
 /* ------------- Bio with accent bar ------------- */
 .bio-wrapper {
     display: flex;
-    gap: calc(var(--spacing-desktop) + 8px);
-    /* 18px on desktop */
+    gap: 20px;
     max-width: var(--max-width-desktop);
+    width: 100%;
+    opacity: 0;
+    animation: fadeUp 0.6s ease 0.8s forwards;
 }
 
 .accent-bar {
     width: 3px;
-    background: var(--secondary);
-    border-radius: 1px;
+    background: linear-gradient(180deg, var(--secondary), rgba(242, 184, 2, 0.2));
+    border-radius: 2px;
     flex-shrink: 0;
+    position: relative;
 }
 
-.bio-text {
+.accent-bar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--secondary);
+    box-shadow: 0 0 0 3px rgba(242, 184, 2, 0.2);
+}
+
+/* Glass card bio */
+.bio-glass {
     flex: 1;
+    padding: 28px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 18px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.bio-glass::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(242, 184, 2, 0.3), transparent);
+}
+
+.bio-glass:hover {
+    border-color: rgba(242, 184, 2, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.bio-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    color: var(--secondary);
+    font-size: 0.9rem;
+    font-weight: 600;
 }
 
 .bio-paragraph {
-    font-size: clamp(1.125rem, 2.8vw, 1.375rem);
-    font-weight: 600;
-    line-height: 1.5;
-    color: var(--primary);
+    font-size: clamp(1rem, 2vw, 1.15rem);
+    font-weight: 400;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.8);
     margin: 0;
     text-align: left;
-    width: 30vw;
-    /* 30% of viewport width on desktop */
-    max-width: 30vw;
-    /* Prevents overflow */
 }
 
+/* ------------- Animations ------------- */
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ------------- Responsive ------------- */
 @media (max-width: 768px) {
     .summary-section {
-        padding: 4vh 5vw;
+        padding: 4vh 4vw;
     }
 
     .summary-title {
-        font-size: 2.25rem;
-        margin-bottom: 4vh;
+        font-size: 2rem;
     }
 
     .summary-text,
-    .bio-wrapper {
+    .bio-wrapper,
+    .highlights-grid {
         max-width: var(--max-width-mobile);
     }
 
+    .highlights-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .highlight-card {
+        padding: 12px;
+    }
+
+    .highlight-icon {
+        width: 32px;
+        height: 32px;
+    }
+
+    .highlight-label {
+        font-size: 0.9rem;
+    }
+
     .bio-wrapper {
-        gap: calc(var(--spacing-mobile) + 8px);
-        /* 13px on mobile */
+        gap: 14px;
+    }
+
+    .bio-glass {
+        padding: 20px;
     }
 
     .bio-paragraph {
+        font-size: 1rem;
         width: 100%;
         max-width: 100%;
     }
 }
 
-/* ------------- Skeletons (re-use AboutMe theme) ------------- */
+@media (max-width: 480px) {
+    .highlights-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .highlight-card {
+        flex-direction: column;
+        text-align: center;
+        gap: 8px;
+    }
+
+    .bio-header {
+        font-size: 0.85rem;
+    }
+}
+
+/* ------------- Skeletons ------------- */
 .skeleton {
     position: relative;
     background: linear-gradient(90deg,
@@ -131,7 +349,6 @@
     }
 }
 
-/* Skeleton blocks sized to match real text */
 .skeleton-summary {
     height: 1.125rem;
     margin-bottom: 0.5rem;

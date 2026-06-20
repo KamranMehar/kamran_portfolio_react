@@ -1,15 +1,63 @@
 import React, { useEffect, useState, useRef } from 'react';
 import '../projects/projects.css';
-import Skeleton from 'react-loading-skeleton';
-import 'react-loading-skeleton/dist/skeleton.css';
-import { db } from '../../firebase';
-import { doc, getDoc } from 'firebase/firestore';
-import { FiArrowUpRight, FiPlay } from 'react-icons/fi';
-import { supabase } from '../../supabase';
+import { FiArrowUpRight } from 'react-icons/fi';
+import { FaGooglePlay, FaApple } from 'react-icons/fa';
+
+const PROJECTS_DATA = [
+    {
+        id: 'pilatix',
+        title: 'PILATIX',
+        description: 'Fitness, Workout & E-Commerce Platform. Delivered a dual-purpose fitness and e-commerce app for iOS and Android. Complete mobile architecture, Shopify API integration, and real-time workout tracking. Built real-time exercise monitoring with rep counting, rest timers, and progress persistence via Firebase Firestore. Implemented an admin dashboard for content managers to publish workouts, schedule programs, and track user engagement metrics.',
+        images: [
+            '/assets/projects/Pilatix/01.PNG',
+            '/assets/projects/Pilatix/02.PNG',
+            '/assets/projects/Pilatix/03.PNG',
+            '/assets/projects/Pilatix/04.PNG',
+            '/assets/projects/Pilatix/05.PNG',
+        ],
+        playStoreUrl: 'https://play.google.com/store/apps/details?id=com.pilatix.app',
+        appStoreUrl: 'https://apps.apple.com/de/app/pilatix/id6758964188',
+        liveLink: 'https://pilatix.co.il/',
+        badge: 'Featured',
+    },
+    {
+        id: 'flittogo',
+        title: 'FlirtToGo',
+        description: 'Real-time location-based social platform. Built live map integration with continuous location updates, multi-profile switching, proximity-based user discovery, real-time chat system, and secure payment processing.',
+        images: [
+            '/assets/projects/FlirtToGo/01.PNG',
+            '/assets/projects/FlirtToGo/02.PNG',
+            '/assets/projects/FlirtToGo/03.PNG',
+            '/assets/projects/FlirtToGo/04.PNG',
+            '/assets/projects/FlirtToGo/05.PNG',
+        ],
+        playStoreUrl: 'https://play.google.com/store/apps/details?id=com.maahey.android.FlirtToGo',
+        appStoreUrl: 'https://apps.apple.com/app/com.maahey.ios.FlirtToGo',
+        liveLink: 'https://www.flirttogo.de/',
+        badge: '',
+    },
+    {
+        id: 'wellptthrives',
+        title: 'WellPT Thrives',
+        description: 'Safety-first digital health platform for adults 50+. Built progressive exercise programming with condition-specific tracks, functional test tracking with chart visualization, wearable integration for steps and sleep, micro-learning education system, weekly habit coaching, AI chatbot with evidence-based responses, capped community groups, and subscription gating with soft conversion prompts.',
+        images: [
+            '/assets/projects/WellPTThrives/01.PNG',
+            '/assets/projects/WellPTThrives/02.PNG',
+            '/assets/projects/WellPTThrives/03.PNG',
+            '/assets/projects/WellPTThrives/04.PNG',
+            '/assets/projects/WellPTThrives/05.PNG',
+            '/assets/projects/WellPTThrives/06.PNG',
+            '/assets/projects/WellPTThrives/07.PNG',
+        ],
+        playStoreUrl: 'https://play.google.com/store/apps/details?id=com.maahey.weiipt.weiipt_thrive',
+        appStoreUrl: 'https://apps.apple.com/app/com.maahey.wellpt.wellptThrive',
+        liveLink: 'https://wellpt.webviews.online/',
+        badge: '',
+    },
+];
 
 const Projects = React.forwardRef((_, ref) => {
     const [projects, setProjects] = useState([]);
-    const [loading, setLoading] = useState(true);
     const visRef = useRef();
     const loadedOnce = useRef(false);
 
@@ -18,7 +66,7 @@ const Projects = React.forwardRef((_, ref) => {
             ([entry]) => {
                 if (entry.isIntersecting && !loadedOnce.current) {
                     loadedOnce.current = true;
-                    fetchData();
+                    setProjects(PROJECTS_DATA);
                 }
             },
             { threshold: 0.1 }
@@ -27,144 +75,88 @@ const Projects = React.forwardRef((_, ref) => {
         return () => io.disconnect();
     }, []);
 
-    const fetchData = async () => {
-        const snap = await getDoc(doc(db, 'portfolio_content', 'projects'));
-        const arr = snap.data()?.data || [];
-        const enriched = arr.map(p => ({
-            ...p,
-            videoUrl: `${supabase.supabaseUrl}/storage/v1/object/public/projects/${p.id}`
-        }));
-
-        setProjects(enriched);
-        setLoading(false);
-    };
-
     return (
         <section id="projects" ref={ref} className="projects-section">
             <div className="projects-wrapper" ref={visRef}>
                 <h1 className="projects-title">Projects</h1>
-
-                {loading
-                    ? Array.from({ length: 2 }).map((_, i) => <SkeletonCard key={i} />)
-                    : projects.map((p) => <ProjectTile key={p.id} {...p} />)}
+                {projects.map((p) => <ProjectTile key={p.id} {...p} />)}
             </div>
         </section>
     );
 });
 
-const ProjectTile = ({ title, description, videoUrl, liveLink }) => {
+const ProjectTile = ({ title, description, images, playStoreUrl, appStoreUrl, liveLink, badge }) => {
+    const [currentImage, setCurrentImage] = useState(0);
+
+    useEffect(() => {
+        if (images.length <= 1) return;
+        const interval = setInterval(() => {
+            setCurrentImage((prev) => (prev + 1) % images.length);
+        }, 3000);
+        return () => clearInterval(interval);
+    }, [images.length]);
+
     return (
         <div className="project-tile">
             <div className="tile-content">
                 <div className="tile-text">
                     <h3 className="tile-title">{title.toUpperCase()}</h3>
                     <p className="tile-desc">{description}</p>
-
-                    {liveLink && (
-                        <a
-                            href={liveLink}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="tile-link"
-                        >
-                            Live Project
-                            <FiArrowUpRight className="tile-arrow" />
-                        </a>
-                    )}
+                    <div className="store-links">
+                        {playStoreUrl && (
+                            <a href={playStoreUrl} target="_blank" rel="noopener noreferrer" className="store-link play-store">
+                                <FaGooglePlay className="store-icon" />
+                                <span>Play Store</span>
+                            </a>
+                        )}
+                        {appStoreUrl && (
+                            <a href={appStoreUrl} target="_blank" rel="noopener noreferrer" className="store-link app-store">
+                                <FaApple className="store-icon" />
+                                <span>App Store</span>
+                            </a>
+                        )}
+                        {liveLink && (
+                            <a href={liveLink} target="_blank" rel="noopener noreferrer" className="tile-link">
+                                Live Project
+                                <FiArrowUpRight className="tile-arrow" />
+                            </a>
+                        )}
+                    </div>
                 </div>
-
                 <div className="tile-video">
-                    <VideoPlayer src={videoUrl} />
+                    <PhoneMockup images={images} currentImage={currentImage} badge={badge} />
                 </div>
             </div>
         </div>
     );
 };
 
-const VideoPlayer = ({ src }) => {
-    const videoRef = useRef(null);
-    const [playing, setPlaying] = useState(true);
-
-    const toggle = () => {
-        const v = videoRef.current;
-        if (!v) return;
-        if (v.paused) {
-            v.play();
-            setPlaying(true);
-        } else {
-            v.pause();
-            setPlaying(false);
-        }
-    };
-
-    useEffect(() => {
-        const v = videoRef.current;
-        if (v) {
-            v.muted = true;
-            v.loop = true;
-            v.play().catch(() => { });
-        }
-
-        const observer = new IntersectionObserver(([entry]) => {
-            if (entry.isIntersecting) {
-                v?.play();
-                setPlaying(true);
-            } else {
-                v?.pause();
-                setPlaying(false);
-            }
-        }, { threshold: 0.1 });
-
-        if (v) observer.observe(v);
-        return () => observer.disconnect();
-    }, [src]);
-
-    return (
-        <div className="video-wrap" onClick={toggle}>
-            <video ref={videoRef} src={src} playsInline />
-            {!playing && (
-                <div className="video-overlay">
-                    <FiPlay className="play-icon" />
-                </div>
-            )}
+const PhoneMockup = ({ images, currentImage, badge }) => (
+    <div className="phone-mockup">
+        {badge && <span className="project-badge">{badge}</span>}
+        <div className="phone-notch" />
+        <div className="phone-btn-mute" />
+        <div className="phone-btn-vol-up" />
+        <div className="phone-btn-vol-down" />
+        <div className="phone-btn-power" />
+        <div className="phone-screen">
+            <ImageCarousel images={images} currentImage={currentImage} />
+            <div className="phone-home-indicator" />
         </div>
-    );
-};
+    </div>
+);
 
-const SkeletonCard = () => (
-    <div className="project-tile">
-        <div className="tile-content">
-            <div className="tile-text">
-                <Skeleton
-                    width="70%"
-                    height={36}
-                    style={{ marginBottom: 8 }}
-                    baseColor="rgba(255,255,255,0.12)"
-                    highlightColor="rgba(121,121,121,0.3)"
-                />
-                <Skeleton
-                    count={3}
-                    style={{ marginBottom: 12 }}
-                    baseColor="rgba(255,255,255,0.12)"
-                    highlightColor="rgba(121,121,121,0.3)"
-                />
-                <Skeleton
-                    width={120}
-                    height={22}
-                    baseColor="rgba(255,255,255,0.12)"
-                    highlightColor="rgba(121,121,121,0.3)"
-                />
-            </div>
-
-            <div className="tile-video">
-                <Skeleton
-                    width="100%"
-                    height="70vh"
-                    baseColor="rgba(255,255,255,0.12)"
-                    highlightColor="rgba(121,121,121,0.3)"
-                />
-            </div>
-        </div>
+const ImageCarousel = ({ images, currentImage }) => (
+    <div className="image-carousel-wrap">
+        {images.map((img, idx) => (
+            <img
+                key={idx}
+                src={img}
+                alt={`Screenshot ${idx + 1}`}
+                className={`carousel-image ${idx === currentImage ? 'active' : ''}`}
+                loading="lazy"
+            />
+        ))}
     </div>
 );
 
